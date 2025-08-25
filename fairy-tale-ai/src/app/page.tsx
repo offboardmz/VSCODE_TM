@@ -204,7 +204,7 @@ export default function Home() {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-4 rounded-full"
+                className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
               >
                 <BookOpen className="w-5 h-5 mr-2" />
                 Learn More
