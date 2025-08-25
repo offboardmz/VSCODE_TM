@@ -2,21 +2,36 @@
 
 import React, { useState, useEffect } from "react";
 import { InvokeLLM } from "@/src/integrations/Core";
+import { User, IUser } from "@/src/entities/user";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Sparkles, 
-  Wand2, 
-  BookOpen, 
-  Stars, 
-  Heart, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Sparkles,
+  Wand2,
+  BookOpen,
+  Stars,
+  Heart,
   Scroll,
+  Github,
+  Twitter,
   Mail,
   ArrowRight,
   Play,
-  Download
+  Download,
+  LogIn,
+  LogOut
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
@@ -25,21 +40,46 @@ export default function Home() {
   const [generatedStory, setGeneratedStory] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
   const heroY = useTransform(scrollY, [0, 300], [0, -50]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.8]);
 
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const user = await User.me();
+        setCurrentUser(user);
+      } catch (e) {
+        setCurrentUser(null);
+      } finally {
+        setIsAuthLoading(false);
+      }
+    };
+    checkUser();
+  }, []);
+
+  const handleLogin = async () => {
+    await User.login();
+  };
+
+  const handleLogout = async () => {
+    await User.logout();
+    setCurrentUser(null);
+  };
+
   const generateFairytale = async () => {
     if (!prompt.trim()) return;
-    
+
     setIsGenerating(true);
     try {
       const response = await InvokeLLM({
-        prompt: `Create a magical fairytale based on this idea: "${prompt}". 
-        Make it enchanting, with vivid imagery, memorable characters, and a heartwarming message. 
-        Include magical elements, a clear beginning, middle, and satisfying ending. 
+        prompt: `Create a magical fairytale based on this idea: "${prompt}".
+        Make it enchanting, with vivid imagery, memorable characters, and a heartwarming message.
+        Include magical elements, a clear beginning, middle, and satisfying ending.
         Keep it around 200-300 words, suitable for all ages.`,
       });
       setGeneratedStory(response);
@@ -76,7 +116,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-pink-900 text-white overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
+        <motion.div
           className="absolute -top-40 -right-40 w-80 h-80 bg-yellow-400/20 rounded-full blur-3xl"
           animate={{
             x: [0, 100, 0],
@@ -88,7 +128,7 @@ export default function Home() {
             ease: "linear"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/2 -left-40 w-60 h-60 bg-purple-400/20 rounded-full blur-3xl"
           animate={{
             x: [0, -50, 0],
@@ -103,16 +143,16 @@ export default function Home() {
       </div>
 
       {/* Sticky Header */}
-      <motion.header 
+      <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10"
-        style={{ 
+        style={{
           opacity: headerOpacity,
           background: 'rgba(30, 27, 75, 0.8)'
         }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
             >
@@ -135,8 +175,8 @@ export default function Home() {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className={`relative px-4 py-2 rounded-full transition-all duration-300 ${
-                    activeSection === item.id 
-                      ? 'text-yellow-400 bg-white/10' 
+                    activeSection === item.id
+                      ? 'text-yellow-400 bg-white/10'
                       : 'text-white/80 hover:text-yellow-400 hover:bg-white/5'
                   }`}
                 >
@@ -152,13 +192,52 @@ export default function Home() {
               ))}
             </nav>
 
+            <div className="hidden md:flex items-center gap-2">
+              {isAuthLoading ? (
+                <Skeleton className="h-10 w-24 rounded-full" />
+              ) : currentUser ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                      <Avatar className="h-10 w-10 border-2 border-purple-400">
+                        <AvatarImage src={currentUser.picture} alt={currentUser.full_name} />
+                        <AvatarFallback className="bg-gradient-to-br from-yellow-400 to-pink-500 text-white font-bold">
+                          {currentUser.full_name?.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-gray-900/80 border-gray-700 text-white" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">{currentUser.full_name}</p>
+                        <p className="text-xs leading-none text-gray-400">{currentUser.email}</p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator className="bg-gray-700" />
+                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer focus:bg-gray-800">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button
+                  onClick={handleLogin}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login with Google
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </motion.header>
 
       {/* Hero Section */}
       <section id="hero" className="relative min-h-screen flex items-center justify-center px-6">
-        <motion.div 
+        <motion.div
           className="text-center max-w-5xl mx-auto"
           style={{ y: heroY, opacity: heroOpacity }}
         >
@@ -168,7 +247,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="mb-8"
           >
-            <motion.div 
+            <motion.div
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8"
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
             >
@@ -187,12 +266,12 @@ export default function Home() {
             </h1>
 
             <p className="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Transform your imagination into enchanting fairytales with our AI-powered story generator. 
+              Transform your imagination into enchanting fairytales with our AI-powered story generator.
               Create magical worlds, memorable characters, and heartwarming adventures in seconds.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
+              <Button
                 onClick={() => scrollToSection('demo')}
                 size="lg"
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
@@ -200,8 +279,8 @@ export default function Home() {
                 <Play className="w-5 h-5 mr-2" />
                 Try Demo
               </Button>
-              
-              <Button 
+
+              <Button
                 variant="outline"
                 size="lg"
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
@@ -393,7 +472,7 @@ export default function Home() {
                 </h3>
               </div>
               <p className="text-white/70 leading-relaxed">
-                Bringing magic to storytelling through the power of artificial intelligence. 
+                Bringing magic to storytelling through the power of artificial intelligence.
                 Create, share, and enjoy unlimited fairytales.
               </p>
             </div>
@@ -417,12 +496,12 @@ export default function Home() {
               <h4 className="text-xl font-semibold mb-6 text-white">Connect With Us</h4>
               <div className="flex gap-4">
                 <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
-                 //
+                  <Github className="w-5 h-5" />
                 </Button>
                 <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
-                  //
+                  <Twitter className="w-5 h-5" />
                 </Button>
-                <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
+                <Button variant="outline" size="icon" className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
                   <Mail className="w-5 h-5" />
                 </Button>
               </div>
