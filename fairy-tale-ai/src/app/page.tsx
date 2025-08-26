@@ -199,7 +199,7 @@ export default function Home() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                      <Avatar className="h-10 w-10 border-2 border-purple-400">
+                      <Avatar className="h-5 w-5 border-2 border-purple-400">
                         <AvatarImage src={currentUser.picture} alt={currentUser.full_name} />
                         <AvatarFallback className="bg-gradient-to-br from-yellow-400 to-pink-500 text-white font-bold">
                           {currentUser.full_name?.charAt(0).toUpperCase()}
