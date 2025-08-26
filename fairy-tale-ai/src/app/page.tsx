@@ -194,17 +194,20 @@ export default function Home() {
 
             <div className="hidden md:flex items-center gap-2">
               {isAuthLoading ? (
-                <Skeleton className="h-10 w-24 rounded-full" />
+                <Skeleton className="h-full w-full rounded-full" />
               ) : currentUser ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                      <Avatar className="h-5 w-5 border-2 border-purple-400">
-                        <AvatarImage src={currentUser.picture} alt={currentUser.full_name} />
-                        <AvatarFallback className="bg-gradient-to-br from-yellow-400 to-pink-500 text-white font-bold">
+                    <Button variant="ghost" className="p-0 rounded-full h-full w-full overflow-hidden">
+                      <span className="text-white font-bold text-sm text-center px-2">
+                          {currentUser.full_name}
+                        </span>
+                      {/*  <Avatar className="h-10 w-10">
+                        <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
+                        <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
                           {currentUser.full_name?.charAt(0).toUpperCase()}
                         </AvatarFallback>
-                      </Avatar>
+                      </Avatar> */}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 bg-gray-900/80 border-gray-700 text-white" align="end" forceMount>
