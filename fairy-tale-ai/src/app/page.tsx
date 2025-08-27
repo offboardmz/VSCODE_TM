@@ -295,7 +295,7 @@ export default function Home() {
           </motion.div>
 
           {/* Floating Elements */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* <div className="absolute inset-0 pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
@@ -315,7 +315,7 @@ export default function Home() {
                 }}
               />
             ))}
-          </div>
+          </div> */}
         </motion.div>
       </section>
 
@@ -498,12 +498,12 @@ export default function Home() {
             <div>
               <h4 className="text-xl font-semibold mb-6 text-white">Connect With Us</h4>
               <div className="flex gap-4">
-                <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
+                {/* <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
                   <Github className="w-5 h-5" />
                 </Button>
                 <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
                   <Twitter className="w-5 h-5" />
-                </Button>
+                </Button> */}
                 <Button variant="outline" size="icon" className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
                   <Mail className="w-5 h-5" />
                 </Button>
@@ -513,7 +513,7 @@ export default function Home() {
 
           <div className="border-t border-white/10 mt-12 pt-8 text-center">
             <p className="text-white/50">
-              © 2024 FairyTale AI. Made with magic and modern web technologies.
+              © 2025 FairyTale. Made with magic and technologies.
             </p>
           </div>
         </div>

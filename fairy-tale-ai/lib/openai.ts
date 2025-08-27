@@ -1,18 +1,12 @@
-// src/integrations/Core.ts
+// src/app/api/openai.ts
 
-"use server";
+import OpenAI from 'openai';
 
-import { open_ai } from "@/lib/openai";
-
-const client = open_ai;
-/*
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
+export const open_ai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,  
 });
- */
 
-export interface LLMRequest {
+/* export interface LLMRequest {
   prompt: string;
 }
 
@@ -35,10 +29,4 @@ export async function InvokeLLM({ prompt }: LLMRequest): Promise<string> {
     console.error("Error calling OpenAI API:", error);
     throw new Error("LLM request failed");
   }
-}
-  /* return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(`Simulated magical fairytale for prompt: "${prompt}"`);
-    }, 500); // имитация задержки API
-  });
 } */
