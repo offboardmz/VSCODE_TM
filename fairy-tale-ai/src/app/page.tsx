@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { InvokeLLM } from "@/src/integrations/Core";
 import { User, IUser } from "@/src/entities/user";
-import { Button } from "@/components/ui/button";
+import { Button, GmailModal } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
@@ -509,9 +509,12 @@ export default function Home() {
                 <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
                   <Twitter className="w-5 h-5" />
                 </Button> */}
-                <Button variant="outline" size="icon" className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
-                  <Mail className="w-5 h-5" />
-                </Button>
+                <GmailModal>  
+                  <Button variant="outline" size="icon" 
+                        className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
+                    <Mail className="w-5 h-5" />
+                  </Button>
+                </GmailModal>
               </div>
             </div>
           </div>
