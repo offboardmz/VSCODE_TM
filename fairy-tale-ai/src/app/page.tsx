@@ -73,6 +73,11 @@ export default function Home() {
 
   const generateFairytale = async () => {
     if (!prompt.trim()) return;
+  
+    if (!currentUser) {
+    alert("Need to LogIn first!");
+    return;
+  }
 
     setIsGenerating(true);
     try {
@@ -80,7 +85,7 @@ export default function Home() {
         prompt: `Create a magical fairytale based on this idea: "${prompt}".
         Make it enchanting, with vivid imagery, memorable characters, and a heartwarming message.
         Include magical elements, a clear beginning, middle, and satisfying ending.
-        Keep it around 200-300 words, suitable for all ages.`,
+        Keep it around 200-300 words, suitable for all ages. Simple language, level B1.`,
       });
       setGeneratedStory(response);
     } catch (error) {
