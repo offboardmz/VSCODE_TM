@@ -7,6 +7,7 @@ import { Button, GmailModal } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { text, setLang } from "@/src/constants/i18n";
 import { Card, CardContent } from "@/components/ui/card";
+import { logToSheet } from "@/src/integrations/logtosheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -87,6 +88,12 @@ export default function Home() {
         prompt: text().MESSAGES.FAIRYTALE_PROMPT(prompt),
       });
       setGeneratedStory(response);
+      logToSheet(
+        process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID || "",
+        currentUser.email || "",
+        prompt,
+        response
+      );
     } catch (error) {
       console.error(text().MESSAGES.ERROR_GENERATE, error);
     }

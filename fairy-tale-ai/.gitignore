@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Configuration files
+*src/config/sunlit-mix-470107-p4-ff54258f59a0.json*
