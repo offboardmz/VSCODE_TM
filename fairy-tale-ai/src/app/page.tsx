@@ -5,7 +5,7 @@ import { InvokeLLM } from "@/src/integrations/Core";
 import { User, IUser } from "@/src/entities/user";
 import { Button, GmailModal } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { text, setLang } from "@/src/constants/i18n";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
@@ -34,6 +34,8 @@ import {
   LogOut
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+
+setLang("en"); 
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -75,21 +77,18 @@ export default function Home() {
     if (!prompt.trim()) return;
   
     if (!currentUser) {
-    alert("Need to LogIn first!");
+    alert(text().MESSAGES.NEED_LOGIN);
     return;
   }
 
     setIsGenerating(true);
     try {
       const response = await InvokeLLM({
-        prompt: `Create a magical fairytale based on this idea: "${prompt}".
-        Make it enchanting, with vivid imagery, memorable characters, and a heartwarming message.
-        Include magical elements, a clear beginning, middle, and satisfying ending.
-        Keep it around 200-300 words, suitable for all ages. Simple language, level B1.`,
+        prompt: text().MESSAGES.FAIRYTALE_PROMPT(prompt),
       });
       setGeneratedStory(response);
     } catch (error) {
-      console.error("Error generating fairytale:", error);
+      console.error(text().MESSAGES.ERROR_GENERATE, error);
     }
     setIsGenerating(false);
   };
@@ -204,7 +203,7 @@ export default function Home() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="p-0 rounded-full h-full w-full overflow-hidden">
-                      <span className="text-white font-bold text-sm text-center px-2">
+                      <span className="text-white hover:text-black font-bold text-sm text-center px-2 ">
                           {currentUser.full_name}
                         </span>
                       {/*  <Avatar className="h-10 w-10">
@@ -274,8 +273,7 @@ export default function Home() {
             </h1>
 
             <p className="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Transform your imagination into enchanting fairytales with our AI-powered story generator.
-              Create magical worlds, memorable characters, and heartwarming adventures in seconds.
+              {text().MAIN.SECOND_HEAD}              
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

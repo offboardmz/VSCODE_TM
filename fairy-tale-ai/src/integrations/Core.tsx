@@ -5,12 +5,6 @@
 import { open_ai } from "@/lib/openai";
 
 const client = open_ai;
-/*
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
- */
 
 export interface LLMRequest {
   prompt: string;
@@ -20,12 +14,12 @@ export async function InvokeLLM({ prompt }: LLMRequest): Promise<string> {
   console.log("Calling LLM with prompt:", prompt);
  try {
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini", // быстрый и дешёвый вариант
+      model: "gpt-4o-mini", // fast and cheap 
       messages: [
         { role: "system", content: "You are a creative storyteller AI." },
         { role: "user", content: prompt },
       ],
-      max_tokens: 300, // ограничим длину ответа
+      max_tokens: 500, // approx. 300 eng words 
     });
 
     // Достаём текст
@@ -36,9 +30,3 @@ export async function InvokeLLM({ prompt }: LLMRequest): Promise<string> {
     throw new Error("LLM request failed");
   }
 }
-  /* return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(`Simulated magical fairytale for prompt: "${prompt}"`);
-    }, 500); // имитация задержки API
-  });
-} */

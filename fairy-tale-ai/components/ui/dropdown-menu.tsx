@@ -44,7 +44,7 @@ export const DropdownMenuTrigger: React.FC<{ children: React.ReactNode ; asChild
   if (!context) throw new Error("DropdownMenuTrigger must be inside DropdownMenu");
 
   return (
-    <button
+    <button 
       onClick={context.toggle}
       className="inline-flex justify-center w-full px-4 py-2 bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-medium rounded-md shadow-sm hover:opacity-90 transition"
     >

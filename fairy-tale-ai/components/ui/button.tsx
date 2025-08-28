@@ -2,8 +2,11 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Mail } from "lucide-react"; 
+import { text, setLang } from "@/src/constants/i18n";
 
 import { cn } from "@/lib/utils"
+
+setLang ("en");
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -58,7 +61,7 @@ function Button({
 }
 
 
-// --- Начало модального окна ---
+// --- Start MODAL with GMAIL ---
 
 import {
   Dialog,
@@ -69,11 +72,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"; // Предполагаем, что компоненты Dialog находятся здесь
+} from "@/components/ui/dialog"; // 
 
 interface GmailModalProps {
-  children: React.ReactNode; // Для кнопки-триггера
-  gmailAddress?: string; // Адрес электронной почты, по умолчанию
+  children: React.ReactNode; // 
+  gmailAddress?: string; // default email
 }
 
 export function GmailModal({ children, gmailAddress = "offboard.gpt@gmail.com" }: GmailModalProps) {
@@ -83,10 +86,9 @@ export function GmailModal({ children, gmailAddress = "offboard.gpt@gmail.com" }
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Сбросить состояние через 2 секунды
+      setTimeout(() => setIsCopied(false), 2000); // 
     } catch (err) {
-      console.error("Не удалось скопировать текст: ", err);
-      // Обработка ошибки, например, показать уведомление пользователю
+      console.error("COPY_ERROR", err);
     }
   };
 
@@ -118,7 +120,7 @@ export function GmailModal({ children, gmailAddress = "offboard.gpt@gmail.com" }
             onClick={() => copyToClipboard(gmailAddress)}
             className="shrink-0"
           >
-            {isCopied ? "Copied!" : "Copy"}
+            {isCopied ? text().MAIL.COPIED : "Copy"}
           </Button>
         </div>
         <DialogFooter className="sm:justify-start">
