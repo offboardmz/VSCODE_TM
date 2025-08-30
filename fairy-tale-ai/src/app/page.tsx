@@ -24,18 +24,14 @@ import {
   Stars,
   Heart,
   Scroll,
-  Github,
-  Twitter,
   Mail,
-  ArrowRight,
   Play,
-  Download,
   LogIn,
   LogOut
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
-setLang("en"); 
+setLang("en");
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -75,11 +71,11 @@ export default function Home() {
 
   const generateFairytale = async () => {
     if (!prompt.trim()) return;
-  
+
     if (!currentUser) {
-    alert(text().MESSAGES.NEED_LOGIN);
-    return;
-  }
+      alert(text().MESSAGES.NEED_LOGIN);
+      return;
+    }
 
     setIsGenerating(true);
     try {
@@ -162,19 +158,21 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
+            {/* Логотип: иконка + текст (видно на больших экранах) */}
             <motion.div
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 md:flex md:items-center md:gap-3" // Применяем классы для адаптивности
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center">
                 <Wand2 className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
+              {/* Этот блок с текстом заголовка будет скрыт на мобильных */}
+              <h1 className="hidden md:block text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
                 FairyTale AI
               </h1>
             </motion.div>
 
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="items-center gap-8"> {/* hidden md:flex */}
               {[
                 { id: 'hero', label: 'Home' },
                 { id: 'demo', label: 'Demo' },
@@ -202,7 +200,7 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="hidden md:flex items-center gap-2">
+            <div className="items-center gap-2"> {/* hidden md:flex */} 
               {isAuthLoading ? (
                 <Skeleton className="h-full w-full rounded-full" />
               ) : currentUser ? (
@@ -210,14 +208,14 @@ export default function Home() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="p-0 rounded-full h-full w-full overflow-hidden">
                       <span className="text-white hover:text-black font-bold text-sm text-center px-2 ">
-                          {currentUser.full_name}
-                        </span>
+                        {currentUser.full_name.charAt(0).toUpperCase()}
+                      </span>
                       {/*  <Avatar className="h-10 w-10">
-                        <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
-                        <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
-                          {currentUser.full_name?.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar> */}
+                          <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
+                          <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
+                            {currentUser.full_name?.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar> */}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 bg-gray-900/80 border-gray-700 text-white" align="end" forceMount>
@@ -240,7 +238,7 @@ export default function Home() {
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full"
                 >
                   <LogIn className="w-4 h-4 mr-2" />
-                  Login with Google
+                  Login
                 </Button>
               )}
             </div>
@@ -279,7 +277,7 @@ export default function Home() {
             </h1>
 
             <p className="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto">
-              {text().MAIN.SECOND_HEAD}              
+              {text().MAIN.SECOND_HEAD}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -513,9 +511,9 @@ export default function Home() {
                 <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
                   <Twitter className="w-5 h-5" />
                 </Button> */}
-                <GmailModal>  
-                  <Button variant="outline" size="icon" 
-                        className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
+                <GmailModal>
+                  <Button variant="outline" size="icon"
+                    className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-4 py-4">
                     <Mail className="w-5 h-5" />
                   </Button>
                 </GmailModal>
