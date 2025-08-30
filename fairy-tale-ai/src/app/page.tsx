@@ -16,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Sparkles,
@@ -351,7 +350,7 @@ export default function Home() {
               <div className="space-y-6">
                 <div>
                   <label className="block text-lg font-medium mb-3 text-white">
-                    What's your story idea?
+                    {"What's your story idea?"}
                   </label>
                   <Input
                     placeholder="e.g., A brave mouse who dreams of becoming a knight..."
