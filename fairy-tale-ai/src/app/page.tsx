@@ -172,35 +172,38 @@ export default function Home() {
               </h1>
             </motion.div>
 
-            <nav className="items-center gap-8"> {/* hidden md:flex */}
+            <nav className="flex items-center gap-4 sm:gap-6 flex-nowrap">
               {[
                 { id: 'hero', label: 'Home' },
                 { id: 'demo', label: 'Demo' },
                 { id: 'features', label: 'Features' },
-                { id: 'contact', label: 'Contact' }
+                { id: 'contact', label: 'Contact' },
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative px-4 py-2 rounded-full transition-all duration-300 ${
-                    activeSection === item.id
+                  className={`relative px-2 py-1 sm:px-3 sm:py-2 rounded-full transition-all duration-300 
+        text-xs sm:text-sm md:text-base flex-shrink min-w-0
+        ${activeSection === item.id
                       ? 'text-yellow-400 bg-white/10'
                       : 'text-white/80 hover:text-yellow-400 hover:bg-white/5'
-                  }`}
+                    }
+      `}
+                  style={{ fontSize: 'clamp(10px, 3vw, 14px)' }}
                 >
                   {item.label}
                   {activeSection === item.id && (
                     <motion.div
                       className="absolute inset-0 rounded-full border border-yellow-400/50"
                       layoutId="activeSection"
-                      transition={{ type: "spring", duration: 0.6 }}
+                      transition={{ type: 'spring', duration: 0.6 }}
                     />
                   )}
                 </button>
               ))}
             </nav>
 
-            <div className="items-center gap-2"> {/* hidden md:flex */} 
+            <div className="items-center gap-2"> {/* hidden md:flex */}
               {isAuthLoading ? (
                 <Skeleton className="h-full w-full rounded-full" />
               ) : currentUser ? (
@@ -291,6 +294,7 @@ export default function Home() {
               </Button>
 
               <Button
+              onClick={() => scrollToSection('features')}
                 variant="outline"
                 size="lg"
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
