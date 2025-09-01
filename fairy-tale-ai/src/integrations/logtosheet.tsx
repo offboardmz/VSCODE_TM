@@ -3,7 +3,8 @@
 import { google } from "googleapis";
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: "src/config/sunlit-mix-470107-p4-ff54258f59a0.json", // my JSON
+  /* keyFile: "src/config/sunlit-mix-470107-p4-ff54258f59a0.json",  */
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"),
   scopes: [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive",
