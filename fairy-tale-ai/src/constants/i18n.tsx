@@ -4,8 +4,8 @@ import { APP_TEXTS_RU_SLANG } from "@/src/constants/texts.ru.slang";
 
 const LANGS = {
   en: APP_TEXTS_EN,
-  ru: APP_TEXTS_RU,
-  rus: APP_TEXTS_RU_SLANG,
+  russ: APP_TEXTS_RU,
+  ru: APP_TEXTS_RU_SLANG,
 };
 
 export type LangKey = keyof typeof LANGS;

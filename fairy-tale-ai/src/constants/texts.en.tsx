@@ -31,6 +31,7 @@ export const APP_TEXTS_EN = {
 
     MAIN: {
       THEME: "FairyTale AI",
+      POWERED_BY_AI: "Powered by AI",
       FIRST_HEAD_1: "Magic",
       FIRST_HEAD_2: "Storytelling",
       SUB_HEAD: "Transform your imagination into enchanting fairytales with our AI-powered story generator. Create magical worlds, memorable characters, and heartwarming adventures in seconds." ,

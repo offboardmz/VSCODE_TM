@@ -27,12 +27,14 @@ import {
   Mail,
   Play,
   LogIn,
-  LogOut
+  LogOut,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
 
-/* setLang("en"); */
-setLang("ru");
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -41,6 +43,24 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [currentLang, setCurrentLang] = useState<'ru' | 'en'>(() => {
+    // Detect browser language on initial load
+    if (typeof window !== 'undefined') {
+      const browserLang = navigator.language.split('-')[0];
+      return browserLang === 'ru' ? 'ru' : 'en';
+    }
+    return 'en'; // Default to English if window is not available
+  });
+
+  // Set initial language based on detection
+  useEffect(() => {
+    setLang(currentLang);
+  }, [currentLang]);
+
+  const handleLanguageChange = (lang: 'ru' | 'en') => {
+    setCurrentLang(lang);
+    setLang(lang);
+  };
 
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
@@ -108,7 +128,8 @@ export default function Home() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          // Adjust the threshold for when the section is considered active
+          return rect.top <= window.innerHeight * 0.2 && rect.bottom >= window.innerHeight * 0.2;
         }
         return false;
       });
@@ -116,6 +137,8 @@ export default function Home() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Initial scroll check to set active section on page load
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -183,13 +206,13 @@ export default function Home() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative px-2 py-1 sm:px-3 sm:py-2 rounded-full transition-all duration-300 
-        text-xs sm:text-sm md:text-base flex-shrink min-w-0
-        ${activeSection === item.id
+                  className={`relative px-2 py-1 sm:px-3 sm:py-2 rounded-full transition-all duration-300
+                  text-xs sm:text-sm md:text-base flex-shrink min-w-0
+                  ${activeSection === item.id
                       ? 'text-yellow-400 bg-white/10'
                       : 'text-white/80 hover:text-yellow-400 hover:bg-white/5'
                     }
-      `}
+                `}
                   style={{ fontSize: 'clamp(10px, 3vw, 14px)' }}
                 >
                   {item.label}
@@ -204,9 +227,26 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="items-center gap-2"> {/* hidden md:flex */}
+            <div className="flex items-center gap-4">
+              {/* Language Switcher Radio Group */}
+              <RadioGroup
+                value={currentLang}
+                onValueChange={(value) => handleLanguageChange(value as 'ru' | 'en')}
+                className="flex items-center space-x-2"
+              >
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="ru" id="r1" />
+                  <label htmlFor="r1" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">RU</label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="en" id="r2" />
+                  <label htmlFor="r2" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">EN</label>
+                </div>
+              </RadioGroup>
+
+              {/* Auth Button */}
               {isAuthLoading ? (
-                <Skeleton className="h-full w-full rounded-full" />
+                <Skeleton className="h-10 w-10 rounded-full" />
               ) : currentUser ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -214,12 +254,12 @@ export default function Home() {
                       <span className="text-white hover:text-black font-bold text-sm text-center px-2 ">
                         {currentUser.full_name.charAt(0).toUpperCase()}
                       </span>
-                      {/*  <Avatar className="h-10 w-10">
-                          <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
-                          <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
-                            {currentUser.full_name?.charAt(0).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar> */}
+                      {/* <Avatar className="h-10 w-10">
+                         <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
+                         <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
+                           {currentUser.full_name?.charAt(0).toUpperCase()}
+                         </AvatarFallback>
+                       </Avatar> */}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 bg-gray-900/80 border-gray-700 text-white" align="end" forceMount>
@@ -232,7 +272,7 @@ export default function Home() {
                     <DropdownMenuSeparator className="bg-gray-700" />
                     <DropdownMenuItem onClick={handleLogout} className="cursor-pointer focus:bg-gray-800">
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>{text().BUTTONS.LOGOUT}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -242,7 +282,7 @@ export default function Home() {
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full"
                 >
                   <LogIn className="w-4 h-4 mr-2" />
-                  Login
+                  {text().BUTTONS.LOGIN}
                 </Button>
               )}
             </div>
@@ -267,7 +307,7 @@ export default function Home() {
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
             >
               <Sparkles className="w-5 h-5 text-yellow-400" />
-              <span className="text-sm font-medium">Powered by Advanced AI</span>
+              <span className="text-sm font-medium">{text().MAIN.POWERED_BY_AI}</span>
             </motion.div>
 
             <h1 className="text-6xl md:text-8xl font-bold mb-6">
@@ -295,7 +335,7 @@ export default function Home() {
               </Button>
 
               <Button
-              onClick={() => scrollToSection('features')}
+                onClick={() => scrollToSection('features')}
                 variant="outline"
                 size="lg"
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
@@ -494,13 +534,18 @@ export default function Home() {
             <div>
               <h4 className="text-xl font-semibold mb-6 text-white">{text().MAIN.FOOTER_LINKS}</h4>
               <div className="space-y-3">
-                {[text().BUTTONS.HOME, text().BUTTONS.DEMO, text().BUTTONS.FEATURES, text().BUTTONS.CONTACT].map((link) => (
+                {[
+                  { id: 'hero', label: text().BUTTONS.HOME },
+                  { id: 'demo', label: text().BUTTONS.DEMO },
+                  { id: 'features', label: text().BUTTONS.FEATURES },
+                  { id: 'contact', label: text().BUTTONS.CONTACT }
+                ].map((link) => (
                   <button
-                    key={link}
-                    onClick={() => scrollToSection(link.toLowerCase() === 'home' ? 'hero' : link.toLowerCase())}
+                    key={link.id}
+                    onClick={() => scrollToSection(link.id)}
                     className="block text-white/70 hover:text-yellow-400 transition-colors duration-200"
                   >
-                    {link}
+                    {link.label}
                   </button>
                 ))}
               </div>

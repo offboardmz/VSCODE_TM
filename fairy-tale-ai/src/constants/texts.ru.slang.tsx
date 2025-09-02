@@ -30,6 +30,7 @@ export const APP_TEXTS_RU_SLANG = {
 
   MAIN: {
     THEME: "ИИ БаянСтори",
+    POWERED_BY_AI: "Powered by AI",
       FIRST_HEAD_1: "Магия",
       FIRST_HEAD_2: "Баян-стори",
       SUB_HEAD: "Разгони своё воображение и накрути угарные сказки с нашим ИИ. Магия, герои, движуха — всё за пару секунд!",
@@ -38,7 +39,7 @@ export const APP_TEXTS_RU_SLANG = {
       DEMO_SUB_HEAD: "Вбей рандомную идею и глянь, как ИИ замутит топовую сказку",
 
       DEMO_BLOCK_HEAD: "Какая у тебя движуха для истории?",
-      DEMO_BLOCK_PROMT: "типа: мышь-бро, мечтающий стать рыцарем...",
+      DEMO_BLOCK_PROMT: "типа: мышь-бро, железный кулак и розовый пони...",
       DEMO_LOADING: "Колдуем магию...",
       DEMO_ANSWER_HEAD: "Твоя угарная сказка",
 
