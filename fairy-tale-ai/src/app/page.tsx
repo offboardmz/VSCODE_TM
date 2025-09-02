@@ -184,10 +184,10 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Логотип: иконка + текст (видно на больших экранах) */}
             <motion.div
-              className="flex items-center gap-3 md:flex md:items-center md:gap-3" // Применяем классы для адаптивности
+              className="flex items-center gap-2 md:gap-3" // Применяем классы для адаптивности
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center">
+              <div className="w-7 h-7 md:w-10 md:h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center">
                 <Wand2 className="w-6 h-6 text-white" />
               </div>
               {/* Этот блок с текстом заголовка будет скрыт на мобильных */}
@@ -196,7 +196,7 @@ export default function Home() {
               </h1>
             </motion.div>
 
-            <nav className="flex items-center gap-4 sm:gap-6 flex-nowrap">
+            <nav className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-nowrap">
               {[
                 { id: 'hero', label: text().BUTTONS.HOME },
                 { id: 'demo', label: text().BUTTONS.DEMO },
@@ -206,8 +206,7 @@ export default function Home() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative px-2 py-1 sm:px-3 sm:py-2 rounded-full transition-all duration-300
-                  text-xs sm:text-sm md:text-base flex-shrink min-w-0
+                  className={`relative px-2 py-1 sm:px-3 sm:py-2 rounded-full transition-all duration-300 text-xs sm:text-sm md:text-base flex-shrink min-w-0                              
                   ${activeSection === item.id
                       ? 'text-yellow-400 bg-white/10'
                       : 'text-white/80 hover:text-yellow-400 hover:bg-white/5'
@@ -279,9 +278,9 @@ export default function Home() {
               ) : (
                 <Button
                   onClick={handleLogin}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm md:px-5 md:py-2.5 md:text-base"
                 >
-                  <LogIn className="w-4 h-4 mr-2" />
+                  <LogIn className="w-3 h-3 mr-2 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                   {text().BUTTONS.LOGIN}
                 </Button>
               )}
