@@ -31,7 +31,8 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
-setLang("en");
+/* setLang("en"); */
+setLang("ru");
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -168,16 +169,16 @@ export default function Home() {
               </div>
               {/* Этот блок с текстом заголовка будет скрыт на мобильных */}
               <h1 className="hidden md:block text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
-                FairyTale AI
+                {text().MAIN.THEME}
               </h1>
             </motion.div>
 
             <nav className="flex items-center gap-4 sm:gap-6 flex-nowrap">
               {[
-                { id: 'hero', label: 'Home' },
-                { id: 'demo', label: 'Demo' },
-                { id: 'features', label: 'Features' },
-                { id: 'contact', label: 'Contact' },
+                { id: 'hero', label: text().BUTTONS.HOME },
+                { id: 'demo', label: text().BUTTONS.DEMO },
+                { id: 'features', label: text().BUTTONS.FEATURES },
+                { id: 'contact', label: text().BUTTONS.CONTACT },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -271,16 +272,16 @@ export default function Home() {
 
             <h1 className="text-6xl md:text-8xl font-bold mb-6">
               <span className="bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-                Magic
+                {text().MAIN.FIRST_HEAD_1}
               </span>
               <br />
               <span className="text-white">
-                Storytelling
+                {text().MAIN.FIRST_HEAD_2}
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto">
-              {text().MAIN.SECOND_HEAD}
+              {text().MAIN.SUB_HEAD}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -290,7 +291,7 @@ export default function Home() {
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
               >
                 <Play className="w-5 h-5 mr-2" />
-                Try Demo
+                {text().BUTTONS.TRY}
               </Button>
 
               <Button
@@ -300,7 +301,7 @@ export default function Home() {
                 className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 text-white border-0 text-lg px-8 py-4 rounded-full"
               >
                 <BookOpen className="w-5 h-5 mr-2" />
-                Learn More
+                {text().BUTTONS.LEARN}
               </Button>
             </div>
           </motion.div>
@@ -340,10 +341,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
-              Create Your Story
+              {text().MAIN.DEMO_HEAD}
             </h2>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Enter a simple idea and watch as our AI weaves it into a magical fairytale
+              {text().MAIN.DEMO_SUB_HEAD}
             </p>
           </motion.div>
 
@@ -352,10 +353,10 @@ export default function Home() {
               <div className="space-y-6">
                 <div>
                   <label className="block text-lg font-medium mb-3 text-white">
-                    {"What's your story idea?"}
+                    {text().MAIN.DEMO_BLOCK_HEAD}
                   </label>
                   <Input
-                    placeholder="e.g., A brave mouse who dreams of becoming a knight..."
+                    placeholder={text().MAIN.DEMO_BLOCK_PROMT}
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     className="bg-white/10 border-white/30 text-white placeholder:text-white/50 text-lg py-4"
@@ -377,12 +378,12 @@ export default function Home() {
                       >
                         <Wand2 className="w-5 h-5" />
                       </motion.div>
-                      Weaving Magic...
+                      {text().MAIN.DEMO_LOADING}
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-5 h-5 mr-2" />
-                      Generate Fairytale
+                      {text().BUTTONS.GENERATE}
                     </>
                   )}
                 </Button>
@@ -398,7 +399,7 @@ export default function Home() {
                     >
                       <div className="flex items-center gap-2 mb-4">
                         <Scroll className="w-5 h-5 text-yellow-400" />
-                        <h3 className="text-xl font-semibold text-white">Your Fairytale</h3>
+                        <h3 className="text-xl font-semibold text-white">{text().MAIN.DEMO_ANSWER_HEAD}</h3>
                       </div>
                       <div className="bg-white/5 rounded-xl p-6 border border-white/20">
                         <p className="text-white/90 leading-relaxed text-lg whitespace-pre-wrap">
@@ -424,10 +425,10 @@ export default function Home() {
             className="text-center mb-20"
           >
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
-              Why Choose FairyTale AI?
+              {text().MAIN.FEATURES_HEAD}
             </h2>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Experience the magic of AI-powered storytelling with features designed for endless creativity
+              {text().MAIN.FEATURES_SUB_HEAD}
             </p>
           </motion.div>
 
@@ -435,18 +436,18 @@ export default function Home() {
             {[
               {
                 icon: Sparkles,
-                title: "AI-Powered Magic",
-                description: "Advanced language models create unique, engaging stories tailored to your ideas"
+                title: text().MAIN.FEATURE_1_HEAD,
+                description: text().MAIN.FEATURE_1_DESCR,
               },
               {
                 icon: Heart,
-                title: "Family-Friendly",
-                description: "All stories are crafted to be wholesome and appropriate for readers of all ages"
+                title: text().MAIN.FEATURE_2_HEAD,
+                description: text().MAIN.FEATURE_2_DESCR,
               },
               {
                 icon: Stars,
-                title: "Endless Creativity",
-                description: "Generate unlimited stories with infinite possibilities and imaginative scenarios"
+                title: text().MAIN.FEATURE_3_HEAD,
+                description: text().MAIN.FEATURE_3_DESCR,
               }
             ].map((feature, index) => (
               <motion.div
@@ -482,19 +483,18 @@ export default function Home() {
                   <Wand2 className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
-                  FairyTale AI
+                  {text().MAIN.THEME}
                 </h3>
               </div>
               <p className="text-white/70 leading-relaxed">
-                Bringing magic to storytelling through the power of artificial intelligence.
-                Create, share, and enjoy unlimited fairytales.
+                {text().MAIN.FOOTER_ABOUT}
               </p>
             </div>
 
             <div>
-              <h4 className="text-xl font-semibold mb-6 text-white">Quick Links</h4>
+              <h4 className="text-xl font-semibold mb-6 text-white">{text().MAIN.FOOTER_LINKS}</h4>
               <div className="space-y-3">
-                {['Home', 'Demo', 'Features', 'Contact'].map((link) => (
+                {[text().BUTTONS.HOME, text().BUTTONS.DEMO, text().BUTTONS.FEATURES, text().BUTTONS.CONTACT].map((link) => (
                   <button
                     key={link}
                     onClick={() => scrollToSection(link.toLowerCase() === 'home' ? 'hero' : link.toLowerCase())}
@@ -507,7 +507,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="text-xl font-semibold mb-6 text-white">Connect With Us</h4>
+              <h4 className="text-xl font-semibold mb-6 text-white">{text().MAIN.FOOTER_CONNECT}</h4>
               <div className="flex gap-4">
                 {/* <Button variant="outline" size="icon" className="border-white/30 text-white hover:bg-white/10">
                   <Github className="w-5 h-5" />
