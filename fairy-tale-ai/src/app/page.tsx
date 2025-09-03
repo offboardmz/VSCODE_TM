@@ -184,7 +184,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Логотип: иконка + текст (видно на больших экранах) */}
             <motion.div
-              className="flex items-center gap-2 md:gap-3" // Применяем классы для адаптивности
+              className="hidden md:block flex items-center gap-2 md:gap-3" // Применяем классы для адаптивности
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-7 h-7 md:w-10 md:h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center">
@@ -245,33 +245,42 @@ export default function Home() {
 
               {/* Auth Button */}
               {isAuthLoading ? (
-                <Skeleton className="h-10 w-10 rounded-full" />
+                <Skeleton className="w-7 h-7 md:h-10 w-10 rounded-full" />
               ) : currentUser ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="p-0 rounded-full h-full w-full overflow-hidden">
+                    <Button
+                      variant="ghost"
+                      className="p-0 rounded-full h-full w-full overflow-hidden"
+                    >
                       <span className="text-white hover:text-black font-bold text-sm text-center px-2 ">
                         {currentUser.full_name.charAt(0).toUpperCase()}
                       </span>
-                      {/* <Avatar className="h-10 w-10">
-                         <AvatarImage src={currentUser.picture} alt={currentUser.full_name} className="object-cover h-full w-full" />
-                         <AvatarFallback className="bg-gradient-to-br from-yellow-100 to-pink-500 text-white font-bold">
-                           {currentUser.full_name?.charAt(0).toUpperCase()}
-                         </AvatarFallback>
-                       </Avatar> */}
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 bg-gray-900/80 border-gray-700 text-white" align="end" forceMount>
+                  <DropdownMenuContent
+                    className="w-56 bg-gray-900/80 border-gray-700 text-white"
+                    align="end"
+                    forceMount
+                  >
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{currentUser.full_name}</p>
-                        <p className="text-xs leading-none text-gray-400">{currentUser.email}</p>
+                        <p className="text-sm font-medium leading-none">
+                          {currentUser.full_name}
+                        </p>
+                        <p className="text-xs leading-none text-gray-400">
+                          {currentUser.email}
+                        </p>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-gray-700" />
-                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer focus:bg-gray-800">
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="cursor-pointer focus:bg-gray-800"
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>{text().BUTTONS.LOGOUT}</span>
+                      {/* текст скрыт на мобилках */}
+                      <span className="hidden sm:inline">{text().BUTTONS.LOGOUT}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -280,10 +289,12 @@ export default function Home() {
                   onClick={handleLogin}
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm md:px-5 md:py-2.5 md:text-base"
                 >
-                  <LogIn className="w-3 h-3 mr-2 sm:w-4 sm:h-4 md:w-5 md:h-5" />
-                  {text().BUTTONS.LOGIN}
+                  <LogIn className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                  {/* текст скрыт на мобилках */}
+                  <span className="hidden sm:inline">{text().BUTTONS.LOGIN}</span>
                 </Button>
               )}
+
             </div>
           </div>
         </div>
