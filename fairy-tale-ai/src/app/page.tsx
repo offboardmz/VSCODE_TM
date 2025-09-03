@@ -184,7 +184,8 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Логотип: иконка + текст (видно на больших экранах) */}
             <motion.div
-              className="hidden md:block flex items-center gap-2 md:gap-3" // Применяем классы для адаптивности
+                      /* flex items-center gap-2 md:gap-3 */
+              className="hidden md:block flex items-center gap-1 md:gap-3 md:gap-3" // Применяем классы для адаптивности
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-7 h-7 md:w-10 md:h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center">
